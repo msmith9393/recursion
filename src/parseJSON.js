@@ -20,14 +20,14 @@ var parseJSON = function(json) {
 	var ch; // the current character
 	// object storing escapee characters
 	var escapee = {
-		'"': '"',
+		'\"': '\"',
 		'\\': '\\',
-		'/': '/',
-		b: '\b',
-		f: '\f',
-		n: '\n',
-		r: '\r',
-		t: '\t'
+		'/': '\/',
+		'b': '\b',
+		'f': '\f',
+		'n': '\n',
+		'r': '\r',
+		't': '\t'
 	};
 
 
@@ -44,7 +44,29 @@ var parseJSON = function(json) {
 
 
 	// function to parse a string value
-  function string() {}
+  function string() {
+  	// when this function gets ran, current character will be "
+  	var str = "";
+  	next();
+  	while (ch) {
+  		if (ch === '"') {
+  			next();
+  			return str;
+  		}
+  		if (ch === '\\') {
+  			next();
+  			if (escapee.hasOwnProperty(ch)) {
+  				str += escapee[ch];
+  			} else {
+  				str += ch;
+  			}
+  		} else {
+  			str += ch;
+  		}
+  		next();
+  	}
+  	throw SyntaxError('Bad String!');
+  }
 
 
 	// function to parse a boolean value
@@ -60,7 +82,7 @@ var parseJSON = function(json) {
   			if (boo === 'true') {
   				return true;
   			} else {
-  				throw("Syntax Error");
+  				throw SyntaxError('Bad Bool!');
   			}
   		case 'f':
   			boo += ch;
@@ -71,7 +93,7 @@ var parseJSON = function(json) {
   			if (boo === 'false') {
   				return false;
   			} else {
-  				throw("Syntax Error");
+  				throw SyntaxError('Bad Bool!');
   			}
   	}
   };
@@ -87,7 +109,7 @@ var parseJSON = function(json) {
   	if (nullCheck === "null") {
   		return null;
   	} else {
-  		throw("Syntax Error");
+  		throw SyntaxError('Bad null!');
   	}
   };
 
@@ -102,7 +124,7 @@ var parseJSON = function(json) {
 
   // function to skip white space
   function white() {
-  	while (ch === " ") {
+  	while (ch && ch <= ' ') {
   		next();
   	}
   };
@@ -110,7 +132,6 @@ var parseJSON = function(json) {
 
   // function to parse a JSON value
   function value() {
-  	white();
   	switch (ch) {
   		case '{':
   			return object();
@@ -128,8 +149,9 @@ var parseJSON = function(json) {
  				if (ch === '-' || (ch && ch >= 0 && ch <= 9)) {
  					return number();
  				} else {
- 					throw("syntax error");
+ 					throw SyntaxError('Bad JSON!');
  				}
+ 				break;
   	}
   };
 
@@ -141,4 +163,4 @@ var parseJSON = function(json) {
 
 };
 
-console.log(parseJSON("null"));
+console.log(parseJSON('"string"'));
