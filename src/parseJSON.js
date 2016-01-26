@@ -48,7 +48,7 @@ var parseJSON = function(json) {
 
 
 	// function to parse a null value
-  function null() {};
+  function nullVal() {};
 
 
 	// function to parse an array value
@@ -64,7 +64,29 @@ var parseJSON = function(json) {
 
 
   // function to parse a JSON value
-  function value() {};
+  function value() {
+  	white();
+  	switch (ch) {
+  		case '{':
+  			return object();
+ 			case '[':
+ 				return array();
+ 			case '"':
+ 				return string();
+ 			case 'f':
+ 				return bool();
+ 			case 't':
+ 				return bool();
+ 			case 'n':
+ 				return nullVal();
+ 			default:
+ 				if (ch === '-' || (ch && ch >= 0 && ch <= 9)) {
+ 					return number();
+ 				} else {
+ 					throw("syntax error");
+ 				}
+  	}
+  };
 
 
   // Return the JSON parse function
