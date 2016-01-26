@@ -32,7 +32,11 @@ var parseJSON = function(json) {
 
 
 	// function to get the next character
-	function next() {};
+	function next() {
+		at += 1;
+		ch = json.charAr(at);
+		return ch;
+	};
   
 
 	// function to parse a number value
