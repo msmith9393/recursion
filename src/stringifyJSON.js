@@ -25,4 +25,22 @@ var stringifyJSON = function(obj) {
   	// return stringified array with stringified elements
   	return '['+ obj +']';
   }
+  // if type of obj is an object
+  if (typeof obj === "object") {
+  	// array to store stringified properties
+  	var res = [];
+  	// loop through obj
+  	for (var key in obj) {
+  		// if type of value is a function or equal to undefined
+  		if (typeof obj[key] === "function" || obj[key] === undefined) {
+  			// do nothing
+  		} else {
+  			// add stringified key, colon, stringified value to result
+  			res.push(stringifyJSON(key) + ':' + stringifyJSON(obj[key]));
+   		}
+  	}
+  	// return stringified object with stringfied keys and values
+  	return '{' + res.join(',') + '}';
+  }
+
 };
