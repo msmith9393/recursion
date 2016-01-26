@@ -80,7 +80,15 @@ var parseJSON = function(json) {
 	// function to parse a null value
   function nullVal() {
   	// when this function gets ran, current character will be n
-
+  	var nullCheck = ch;
+  	nullCheck += next();
+  	nullCheck += next();
+  	nullCheck += next();
+  	if (nullCheck === "null") {
+  		return null;
+  	} else {
+  		throw("Syntax Error");
+  	}
   };
 
 
@@ -133,4 +141,4 @@ var parseJSON = function(json) {
 
 };
 
-console.log(parseJSON("falsetrue"));
+console.log(parseJSON("null"));
