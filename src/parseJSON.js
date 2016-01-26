@@ -53,7 +53,7 @@ var parseJSON = function(json) {
   	var boo = '';
   	switch(ch) {
   		case 't':
-  			boo += ch
+  			boo += ch;
   			boo += next();
   			boo += next();
   			boo += next();
@@ -63,6 +63,16 @@ var parseJSON = function(json) {
   				throw("Syntax Error");
   			}
   		case 'f':
+  			boo += ch;
+  			boo += next();
+  			boo += next();
+  			boo += next();
+  			boo += next();
+  			if (boo === 'false') {
+  				return false;
+  			} else {
+  				throw("Syntax Error");
+  			}
   	}
   };
 
@@ -123,4 +133,4 @@ var parseJSON = function(json) {
 
 };
 
-console.log(parseJSON("tru"));
+console.log(parseJSON("falsetrue"));
