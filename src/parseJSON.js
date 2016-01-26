@@ -34,7 +34,7 @@ var parseJSON = function(json) {
 	// function to get the next character
 	function next() {
 		at += 1;
-		ch = json.charAr(at);
+		ch = json.charAt(at);
 		return ch;
 	};
   
@@ -48,11 +48,30 @@ var parseJSON = function(json) {
 
 
 	// function to parse a boolean value
-  function bool() {};
+  function bool() {
+  	// when this function gets ran, current character will be either f or t
+  	var boo = '';
+  	switch(ch) {
+  		case 't':
+  			boo += ch
+  			boo += next();
+  			boo += next();
+  			boo += next();
+  			if (boo === 'true') {
+  				return true;
+  			} else {
+  				throw("Syntax Error");
+  			}
+  		case 'f':
+  	}
+  };
 
 
 	// function to parse a null value
-  function nullVal() {};
+  function nullVal() {
+  	// when this function gets ran, current character will be n
+
+  };
 
 
 	// function to parse an array value
@@ -103,3 +122,5 @@ var parseJSON = function(json) {
   return value(); // return the invokation of value
 
 };
+
+console.log(parseJSON("tru"));
