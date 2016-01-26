@@ -15,4 +15,14 @@ var stringifyJSON = function(obj) {
   	// return string beginning and ending with additional quotation marks
   	return '"' + obj + '"';
   }
+  // if type of obj is an array
+  if (Array.isArray(obj)) {
+  	// loop through all elements in array
+  	for (var i=0; i<obj.length; i++) {
+  		// each element equals the stringified version of itself
+  		obj[i] = stringifyJSON(obj[i]);
+  	}
+  	// return stringified array with stringified elements
+  	return '['+ obj +']';
+  }
 };
