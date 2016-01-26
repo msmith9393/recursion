@@ -157,7 +157,30 @@ var parseJSON = function(json) {
 
 
 	// function to parse an array value
-  function array() {};
+  function array() {
+  	// when this function gets ran, current character will be [
+  	var array = [];
+  	next();
+  	white();
+  	if (ch === ']') {
+  		next();
+  		return array;
+  	}
+  	while(ch) {
+  		array.push(value());
+  		white();
+  		if (ch === ']') {
+  			next();
+  			return array;
+  		}
+  		if (ch && ch !== ',') {
+  			throw SyntaxError('Bad Array!');
+  		}
+  		next();
+  		white();
+  	}
+  	throw SyntaxError('Bad Array!')
+  };
 
 
 	// function to parse an object value
@@ -205,4 +228,5 @@ var parseJSON = function(json) {
 
 };
 
-console.log(parseJSON('999'));
+console.log(parseJSON('["x", "9"]'));
+console.log(JSON.parse('["x", "9"]'));
