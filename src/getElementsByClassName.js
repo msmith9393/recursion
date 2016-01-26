@@ -14,7 +14,7 @@ var getElementsByClassName = function(className){
   // create an inner function that will search through all the nodes and determine if they have a class named className
   function traverse(node) {
   	// check if node has className
-  	if (node.classList && node.classList.contains(className)) {
+  	if (node.classList.contains(className)) {
   		// if it does add it to hasClass
   		hasClass.push(node);
   	}
@@ -31,4 +31,28 @@ var getElementsByClassName = function(className){
   // return the array storing all the nodes that have a class named className
   return hasClass;
 
+};
+
+// Option 2
+var getElementsByClassName = function(className, node){
+
+	// node is either provided or we start from the top at document.body
+	node = node || document.body;
+
+	// an array to store all the nodes that have a class named className
+  var hasClass = [];
+
+  // check if current node has className
+  if (node.classList && node.classList.contains(className)) {
+  	// if it does add it to hasClass
+  	hasClass.push(node);
+ 	}
+
+ 	// loop through all of the node's children
+ 	for (var i=0; i<node.children.length; i++) {
+ 		hasClass = hasClass.concat(getElementsByClassName(className, node.children[i]));
+ 	}
+
+  // return the array storing all the nodes that have a class named className
+  return hasClass;
 };
