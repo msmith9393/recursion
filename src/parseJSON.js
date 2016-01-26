@@ -40,7 +40,49 @@ var parseJSON = function(json) {
   
 
 	// function to parse a number value
-  function number() {};
+  function number() {
+  	// when this function gets ran, current character will be either - or a digit
+  	var number = '', res;
+
+  	function digits() {
+  		while (ch && ch>=0 && ch<=9) {
+  			number += ch;
+  			next();
+  		}
+  	};
+
+  	if (ch === '-') {
+  		number += ch;
+  		next();
+  	}
+
+  	digits();
+
+  	if (ch === '.') {
+  		number += ch;
+  		next();
+  		digits();
+  	}
+
+  	if (ch === 'e' || ch === 'E') {
+  		number += ch;
+  		next();
+  		if (ch === '-' || ch === '+') {
+  			number += ch;
+  			next();
+  		}
+  		digits();
+  	}
+
+  	res += number;
+
+  	if (!isNaN(number)) {
+  		return number;
+  	} else {
+  		throw SyntaxError('Bad Number!')
+  	}
+
+  };
 
 
 	// function to parse a string value
@@ -163,4 +205,4 @@ var parseJSON = function(json) {
 
 };
 
-console.log(parseJSON('"string"'));
+console.log(parseJSON('999'));
