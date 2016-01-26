@@ -64,7 +64,11 @@ var parseJSON = function(json) {
 
 
   // function to skip white space
-  function white() {};
+  function white() {
+  	while (ch === " ") {
+  		next();
+  	}
+  };
 
 
   // function to parse a JSON value
